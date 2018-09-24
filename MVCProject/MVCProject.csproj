@@ -194,6 +194,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Context\ProductContext.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -201,12 +202,33 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Catalog\Images\Thumbs\boatbig.png" />
+    <Content Include="Catalog\Images\Thumbs\boatpaper.png" />
+    <Content Include="Catalog\Images\Thumbs\boatsail.png" />
+    <Content Include="Catalog\Images\Thumbs\busdouble.png" />
+    <Content Include="Catalog\Images\Thumbs\busgreen.png" />
+    <Content Include="Catalog\Images\Thumbs\busred.png" />
+    <Content Include="Catalog\Images\Thumbs\carconvert.png" />
+    <Content Include="Catalog\Images\Thumbs\carearly.png" />
+    <Content Include="Catalog\Images\Thumbs\carfast.png" />
+    <Content Include="Catalog\Images\Thumbs\carfaster.png" />
+    <Content Include="Catalog\Images\Thumbs\carracer.png" />
+    <Content Include="Catalog\Images\Thumbs\planeace.png" />
+    <Content Include="Catalog\Images\Thumbs\planeglider.png" />
+    <Content Include="Catalog\Images\Thumbs\planepaper.png" />
+    <Content Include="Catalog\Images\Thumbs\planeprop.png" />
+    <Content Include="Catalog\Images\Thumbs\rocket.png" />
+    <Content Include="Catalog\Images\Thumbs\truckbig.png" />
+    <Content Include="Catalog\Images\Thumbs\truckearly.png" />
+    <Content Include="Catalog\Images\Thumbs\truckfire.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -220,6 +242,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Catalog\Images\Thumbs\Thumbs.db" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -265,6 +288,8 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\Products.cshtml" />
+    <Content Include="Views\Home\Product.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

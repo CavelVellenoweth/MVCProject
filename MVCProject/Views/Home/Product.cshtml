@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Product";
+    var product = "";
+    product += ViewContext.RouteData.Values["id"];
+    var Products = ViewData["Products"] as IEnumerable<MVCProject.Models.Product>;
+}
+
+@if (@product == "")
+{
+    <h2>NO PRODUCT ENTERED</h2>
+}
+else
+{
+    <h2>@product</h2>;
+}
+@foreach (var item in Products)
+{
+    if (item.ProductName.ToString() == product.ToString())
+    {
+        <table style="height:300px">
+
+            <tr>
+                <td>
+                    <img ID="Image2" runat="server" src="~/Catalog/Images/Thumbs/@Url.Content(@Html.DisplayFor(Item => item.ImagePath).ToString())" style="border:solid; height:300px" alt="@product" />
+                </td>
+                <td style="vertical-align: top; text-align:left; word-wrap: break-word">
+                    <b>Description:</b>
+                    <br />
+                    @Html.DisplayFor(Item => item.Description).ToString()
+                    <br />
+                    <span>
+                        <b>Price:</b>&nbsp;£@Html.DisplayFor(Item => item.Price)
+                    </span>
+                    <br />
+                    <b>Product Number:</b>&nbsp;@Html.DisplayFor(Item => item.ProductID).ToString()
+                    <br />
+                    <b>Add To Cart</b>
+                </td>
+            </tr>
+        </table>
+    }
+}
