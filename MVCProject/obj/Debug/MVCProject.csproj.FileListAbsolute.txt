@@ -118,3 +118,5 @@ C:\Users\CavelVellenoweth\source\repos\MVCProject\MVCProject\obj\Debug\MVCProjec
 C:\Users\CavelVellenoweth\source\repos\MVCProject\MVCProject\obj\Debug\MVCProject.csproj.CopyComplete
 C:\Users\CavelVellenoweth\source\repos\MVCProject\MVCProject\obj\Debug\MVCProject.dll
 C:\Users\CavelVellenoweth\source\repos\MVCProject\MVCProject\obj\Debug\MVCProject.pdb
+C:\Users\CavelVellenoweth\source\repos\MVCProject\MVCProject\obj\Debug\MVCProject.Migrations.Initial.resources
+C:\Users\CavelVellenoweth\source\repos\MVCProject\MVCProject\obj\Debug\MVCProject.csproj.GenerateResource.cache
