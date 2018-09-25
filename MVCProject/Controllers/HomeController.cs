@@ -9,7 +9,7 @@ namespace MVCProject.Controllers
 {
     public class HomeController : Controller
     {
-        ProductContext db = new ProductContext();
+        MVCPetsContext db = new MVCPetsContext();
 
         public ActionResult Index()
         {

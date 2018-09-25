@@ -20,19 +20,24 @@
                 }
                 if (category == "" || category == Products.ElementAt(i+j).CategoryID.ToString())
                 {
-                    <td style="vertical-align: top; text-align:left; word-wrap: break-word">
-                        <a href="@Url.Action("Product","Home",new { id = @Html.DisplayFor(Item => Products.ElementAt(i+j).ProductName).ToString() },null)">
-                            <img ID="Image2" runat="server" src="~/Catalog/Images/Thumbs/@Url.Content(@Html.DisplayFor(Item => Products.ElementAt(i+j).ImagePath).ToString())" width="100" height="75" />
-                        </a>
-                        <br />
-                        @Html.ActionLink(@Html.DisplayFor(Item => Products.ElementAt(j+i).ProductName).ToString(), "Product", "Home", new { id = @Html.DisplayFor(Item => Products.ElementAt(j+i).ProductName).ToString() }, null)
-                        <br />
-                        <span>
-                            <b> Price: </b> £@Html.DisplayFor(Item => Products.ElementAt(j+i).Price)
-                        </span>
-                        <br />
-                        <b>Add To Cart</b>
-                    </td>
+            <td style="vertical-align: top; text-align:left; word-wrap: break-word">
+                <a href="@Url.Action("Product","Home",new { id = @Html.DisplayFor(Item => Products.ElementAt(i+j).ProductName).ToString() },null)">
+                    <img ID="Image2" runat="server" src="~/Catalog/Images/Thumbs/@Url.Content(@Html.DisplayFor(Item => Products.ElementAt(i+j).ImagePath).ToString())" width="100" height="75" />
+                </a>
+                <br />
+                @Html.ActionLink(@Html.DisplayFor(Item => Products.ElementAt(j + i).ProductName).ToString(), "Product", "Home", new { id = @Html.DisplayFor(Item => Products.ElementAt(j + i).ProductName).ToString() }, null)
+                <br />
+                <span>
+                    <b> Price: </b> £@Html.DisplayFor(Item => Products.ElementAt(j + i).Price)
+                </span>
+                <br />
+                @if (Products.ElementAt(j + i).CurrentStock < 10)
+                {
+                    <b style="font-size:70%; color:red;" > Low Stock Only: @Html.DisplayFor(Item => Products.ElementAt(j + i).CurrentStock) Left </b>
+                    <br />
+                }
+                <b>Add To Cart</b>
+            </td>
                 }
             }
         </tr>
