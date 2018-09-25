@@ -4,8 +4,9 @@
     var product = "";
     product += ViewContext.RouteData.Values["id"];
     var Products = ViewData["Products"] as IEnumerable<MVCProject.Models.Product>;
-}
+    var _this = Products.Where(p => p.ProductName.ToString() == product.ToString());
 
+}
 @if (@product == "")
 {
     <h2>NO PRODUCT ENTERED</h2>
@@ -14,12 +15,12 @@ else
 {
     <h2>@product</h2>;
 }
-@foreach (var item in Products)
+@foreach (var item in _this)
 {
     if (item.ProductName.ToString() == product.ToString())
     {
+        var trueprice = (item.Price * (1M - (item.DiscountPct / 100M)));
         <table style="height:300px">
-
             <tr>
                 <td>
                     <img ID="Image2" runat="server" src="~/Catalog/Images/Thumbs/@Url.Content(@Html.DisplayFor(Item => item.ImagePath).ToString())" style="border:solid; height:300px" alt="@product" />
@@ -30,10 +31,23 @@ else
                     @Html.DisplayFor(Item => item.Description).ToString()
                     <br />
                     <span>
-                        <b>Price:</b>&nbsp;£@Html.DisplayFor(Item => item.Price)
+                        @if (item.Price == trueprice)
+                        {
+                            <b> Price: </b> @(String.Format("{0:C}", item.Price))
+                        }
+                        else
+                        {
+                            <b> Price: </b> <s>@(String.Format("{0:C}", item.Price))</s> @(String.Format("{0:C}", trueprice))<i style="color:red">[@Html.DisplayFor(Item => item.DiscountPct)% Off!]</i>
+                        }
                     </span>
                     <br />
                     <b>Product Number:</b>&nbsp;@Html.DisplayFor(Item => item.ProductID).ToString()
+                    <br />
+                    @if (item.CurrentStock < 10)
+                    {
+                        <b style="font-size:70%; color:red;"> Low Stock Only: @Html.DisplayFor(Item => item.CurrentStock) Left </b>
+                        <br />
+                    }
                     <br />
                     <b>Add To Cart</b>
                 </td>

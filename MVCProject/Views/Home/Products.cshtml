@@ -5,45 +5,53 @@
     var category = "";
     category += ViewContext.RouteData.Values["id"];
     int DisplayAmount = 6;
+    var model = Products.Where(c => c.CategoryID.ToString() == category);
 }
-<h2>@ViewBag.Title</h2>
+@if (category == "")
+{
+    model = Products;
+}
 
-@for (int i = 0; i < Products.Count(); i+=DisplayAmount)
+<h2>@ViewBag.Title</h2>
+@for (int i = 0; i < model.Count(); i += DisplayAmount)
 {
     <table id="mytable" style="text-wrap:normal; border-collapse: separate; border-spacing: 50px; width:500px; height:100px;">
         <tr>
             @for (int j = 0; j < DisplayAmount; j++)
             {
-                if(j + i == Products.Count())
+                if (j + i == model.Count())
                 {
                     break;
                 }
-                if (category == "" || category == Products.ElementAt(i+j).CategoryID.ToString())
-                {
-            <td style="vertical-align: top; text-align:left; word-wrap: break-word">
-                <a href="@Url.Action("Product","Home",new { id = @Html.DisplayFor(Item => Products.ElementAt(i+j).ProductName).ToString() },null)">
-                    <img ID="Image2" runat="server" src="~/Catalog/Images/Thumbs/@Url.Content(@Html.DisplayFor(Item => Products.ElementAt(i+j).ImagePath).ToString())" width="100" height="75" />
-                </a>
-                <br />
-                @Html.ActionLink(@Html.DisplayFor(Item => Products.ElementAt(j + i).ProductName).ToString(), "Product", "Home", new { id = @Html.DisplayFor(Item => Products.ElementAt(j + i).ProductName).ToString() }, null)
-                <br />
-                <span>
-                    <b> Price: </b> £@Html.DisplayFor(Item => Products.ElementAt(j + i).Price)
-                </span>
-                <br />
-                @if (Products.ElementAt(j + i).CurrentStock < 10)
-                {
-                    <b style="font-size:70%; color:red;" > Low Stock Only: @Html.DisplayFor(Item => Products.ElementAt(j + i).CurrentStock) Left </b>
+                var trueprice = (model.ElementAt(j + i).Price * (1M - (model.ElementAt(j + i).DiscountPct / 100M)));
+                <td style="vertical-align: top; text-align:left; word-wrap: break-word">
+                    <a href="@Url.Action("Product","Home",new { id = @Html.DisplayFor(Item => model.ElementAt(i+j).ProductName).ToString() },null)">
+                        <img ID="Image2" runat="server" src="~/Catalog/Images/Thumbs/@Url.Content(@Html.DisplayFor(Item => model.ElementAt(i+j).ImagePath).ToString())" width="100" height="75" />
+                    </a>
                     <br />
-                }
-                <b>Add To Cart</b>
-            </td>
-                }
+                    @Html.ActionLink(@Html.DisplayFor(Item => model.ElementAt(j + i).ProductName).ToString(), "Product", "Home", new { id = @Html.DisplayFor(Item => model.ElementAt(j + i).ProductName).ToString() }, null)
+                    <br />
+                    <span>
+                        @if (model.ElementAt(j + i).Price == trueprice)
+                        {
+                            <b> Price: </b> @(String.Format("{0:C}", model.ElementAt(j + i).Price))
+                        }
+                        else
+                        {
+                            <b> Price: </b> <s>@(String.Format("{0:C}", model.ElementAt(j + i).Price))</s> @(String.Format("{0:C}", trueprice))<i style="color:red">[@Html.DisplayFor(Item => model.ElementAt(j + i).DiscountPct)% Off!]</i>
+                        }
+                    </span>
+                    <br />
+                    @if (model.ElementAt(j + i).CurrentStock < 10)
+                    {
+                        <b style="font-size:70%; color:red;"> Low Stock Only: @Html.DisplayFor(Item => model.ElementAt(j + i).CurrentStock) Left </b>
+                        <br />
+                    }
+                    <b>Add To Cart</b>
+                </td>
             }
         </tr>
     </table>
 }
-
-
 
 
