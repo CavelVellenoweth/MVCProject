@@ -120,3 +120,5 @@ C:\Users\CavelVellenoweth\source\repos\MVCProject\MVCProject\obj\Debug\MVCProjec
 C:\Users\CavelVellenoweth\source\repos\MVCProject\MVCProject\obj\Debug\MVCProject.pdb
 C:\Users\CavelVellenoweth\source\repos\MVCProject\MVCProject\obj\Debug\MVCProject.Migrations.Initial.resources
 C:\Users\CavelVellenoweth\source\repos\MVCProject\MVCProject\obj\Debug\MVCProject.csproj.GenerateResource.cache
+C:\Users\CavelVellenoweth\source\repos\MVCProject\MVCProject\bin\PayPal.dll
+C:\Users\CavelVellenoweth\source\repos\MVCProject\MVCProject\bin\PayPal.xml
