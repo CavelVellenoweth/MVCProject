@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "Admin";
+    var Products = ViewData["Products"] as IEnumerable<MVCProject.Models.Product>;
+    var Categories = ViewData["Categories"] as IEnumerable<MVCProject.Models.Category>;
+}
+@if (ViewBag.SelectedValue != null)
+{
+    <h2>@ViewBag.SelectedValue</h2>
+}
+<h2>Edit Category</h2>
+
+<div align="left">
+    @using (Html.BeginForm("GetSelectedCategory", "Home", FormMethod.Post))
+    {
+        @Html.DropDownList("SelectedCategory",
+                            new SelectList((Categories),
+                            "CategoryId",
+                            "CategoryName"),
+                            "Select Existing Category",
+                            new { @class = "form-control" })
+        <br />
+        <input type="submit" value="Select" />
+
+    }
+    <br />
+
+    @using (Html.BeginForm("UpdateCategories", "Home", FormMethod.Post))
+    {
+        if (String.IsNullOrEmpty(ViewBag.SelectedCategory))
+        {
+            @Html.Label("Category Name:");
+            <input type="text" name="categoryName" />
+            <br />
+            @Html.Label("Category Description:");
+
+            <input type="text" name="categoryDescription" />
+        }
+        else
+        {
+            @Html.Label("Category Name:");
+            <input type="text" name="categoryName" value="@Categories.Where(m=>m.CategoryId.ToString() == ViewBag.SelectedCategory).First().CategoryName.ToString()" />
+            <br />
+            @Html.Label("Category Description:");
+            <input type="text" name="categoryDescription" value="@Categories.Where(m=>m.CategoryId.ToString() == ViewBag.SelectedCategory).First().Description" />
+        }
+        <br />
+        <input type="submit" value="Upload" />
+    }
+</div>
+
+<h2>Edit Product</h2>
+<div align="left">
+
+    @using (Html.BeginForm("GetSelectedProduct", "Home", FormMethod.Post))
+    {
+        @Html.DropDownList("SelectedProduct",
+                            new SelectList((Products),
+                            "ProductId",
+                            "ProductName"),
+                            "Select Existing Product",
+                            new { @class = "form-control" })
+        <br />
+        <input type="submit" value="Select" />
+    }
+    <br />
+    @using (Html.BeginForm("UpdateProducts", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        if (String.IsNullOrEmpty(ViewBag.SelectedProduct))
+        {
+            @Html.Label("Product Name:");
+            <input type="text" name="productName" />
+            <br />
+            @Html.Label("Product Description:");
+            <input type="text" name="productDescription" maxlength="255" />
+            <br />
+            @Html.Label("Image:");
+            <input type="file" name="image" id="image" />
+            @Html.Label("Price:");
+            <input type="text" name="price" />
+            <br />
+            @Html.Label("Category ID:");
+            <input type="text" name="categoryID" />
+            <br />
+            @Html.Label("Current Stock:");
+            <input type="text" name="currentStock" />
+            <br />
+            @Html.Label("Discount Percentage:");
+            <input type="text" name="discountPct" />
+        }
+        else
+        {
+            @Html.Label("Product Name:");
+            <input type="text" name="productName" value="@Products.Where(m=>m.ProductID.ToString() == ViewBag.SelectedProduct).First().ProductName.ToString()" />
+            <br />
+            @Html.Label("Product Description:");
+            <input type="text" name="productDescription" maxlength="255" value="@Products.Where(m=>m.ProductID.ToString() == ViewBag.SelectedProduct).First().Description" />
+            <br />
+            @Html.Label("Image:");
+            <input type="file" name="image" id="image" value=@Products.Where(m=>m.ProductID.ToString() == ViewBag.SelectedProduct).First().ImagePath.ToString() />
+            @Html.Label("Price:");
+            <input type="text" name="price" value=@Products.Where(m=>m.ProductID.ToString() == ViewBag.SelectedProduct).First().Price.ToString() />
+            <br />
+            @Html.Label("Category ID:");
+            <input type="text" name="categoryID" value=@Products.Where(m=>m.ProductID.ToString() == ViewBag.SelectedProduct).First().CategoryID.ToString() />
+            <br />
+            @Html.Label("Current Stock:");
+            <input type="text" name="currentStock" value=@Products.Where(m=>m.ProductID.ToString() == ViewBag.SelectedProduct).First().CurrentStock.ToString() />
+            <br />
+            @Html.Label("Discount Percentage:");
+            <input type="text" name="discountPct" value=@Products.Where(m=>m.ProductID.ToString() == ViewBag.SelectedProduct).First().DiscountPct.ToString() />
+        }
+        <br />
+        <input type="submit" value="Upload" />
+    }
+</div>

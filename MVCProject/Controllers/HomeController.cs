@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -43,6 +44,90 @@ namespace MVCProject.Controllers
             ViewBag.Message = "Your Product page.";
             ViewBag.Products = db.Products.ToList();
             ViewData["Products"] = db.Products.ToList();
+            return View(db.Categories.ToList());
+        }
+        [HttpPost]
+        public ActionResult UpdateCategories(string categoryName, string categoryDescription)
+        {
+            if (ModelState.IsValid)
+            {
+                if(db.Categories.Where(m=> m.CategoryName == categoryName).Count() > 0)
+                {
+                    Category category = db.Categories.FirstOrDefault(m => m.CategoryName == categoryName);
+                    category.CategoryName = categoryName;
+                    category.Description = categoryDescription;
+                    db.Entry(category).State = System.Data.Entity.EntityState.Modified;
+                }
+                else
+                {
+                    var newCategory = new Category();
+                    newCategory.CategoryName = categoryName;
+                    newCategory.Description = categoryDescription;
+                    db.Categories.Add(newCategory);
+                }                    
+                db.SaveChanges();
+            }
+            return RedirectToAction("Admin");
+        }
+        [HttpPost]
+        public ActionResult GetSelectedCategory()
+        {
+            TempData["SelectedCategory"] = Request.Form["SelectedCategory"];
+            return RedirectToAction("Admin");
+        }
+        [HttpPost]
+        public ActionResult UpdateProducts(string productName, string productDescription, HttpPostedFileBase image,string price, string categoryID,string currentStock,string discountPct)
+        {
+            if (ModelState.IsValid)
+            {
+                if (db.Products.Where(m => m.ProductName == productName).Count() > 0)
+                {
+                    Product product = db.Products.FirstOrDefault(m => m.ProductName == productName);
+                    product.ProductName = productName;
+                    product.Description = productDescription;
+                    if (image != null)
+                    {
+                        var path = Path.Combine(Server.MapPath("~/Catalog/Images/Thumbs"), Path.GetFileName(image.FileName));
+                        image.SaveAs(path);
+                        product.ImagePath = image.FileName.ToString();
+                    }
+                    product.Price = Decimal.Parse(price);
+                    product.CategoryID = Int32.Parse(categoryID);
+                    product.CurrentStock = Int32.Parse(currentStock);
+                    product.DiscountPct = Int32.Parse(discountPct);
+                    db.Entry(product).State = System.Data.Entity.EntityState.Modified;
+                }
+                else
+                {
+                    var newProduct = new Product();
+                    newProduct.ProductName = productName;
+                    newProduct.Description = productDescription;
+                    var path = Path.Combine(Server.MapPath("~/Catalog/Images/Thumbs"), Path.GetFileName(image.FileName));
+                    image.SaveAs(path);
+                    newProduct.ImagePath = image.FileName.ToString();
+                    newProduct.Price = Decimal.Parse(price);
+                    newProduct.CategoryID = Int32.Parse(categoryID);
+                    newProduct.CurrentStock = Int32.Parse(currentStock);
+                    newProduct.DiscountPct = Int32.Parse(discountPct);
+                    db.Products.Add(newProduct);
+                }
+                db.SaveChanges();
+            }
+            return RedirectToAction("Admin");
+        }
+        [HttpPost]
+        public ActionResult GetSelectedProduct()
+        {
+            TempData["SelectedProduct"] = Request.Form["SelectedProduct"];
+            return RedirectToAction("Admin");
+        }
+        public ActionResult Admin()
+        {
+            ViewBag.SelectedCategory = TempData["SelectedCategory"];
+            ViewBag.SelectedProduct = TempData["SelectedProduct"];
+            ViewBag.Message = "Your Admin page.";
+            ViewData["Products"] = db.Products;
+            ViewData["Categories"] = db.Categories;
             return View(db.Categories.ToList());
         }
         public ActionResult Payment()
